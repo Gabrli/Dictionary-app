@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Nav from "./components/nav";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [list, setList] = useState([]);
+  const [titleResults, setTitleResults] = useState("");
+  const [readMainKey, setReadMainKey] = useState("");
+  const [audio, setAudio] = useState("");
+
+  const getDataFromApi = () => {};
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <main>
+        <Nav />
+        <div id="search-box">
+          <span></span>
+          <input id="search" name="search" type="text" placeholder="" />
+        </div>
+        <div id="main-result-box">
+          <section className="main-result-section" id="first">
+            <p>
+              <strong></strong>
+            </p>
+            <p>
+              <strong></strong>
+            </p>
+          </section>
+          <section className="main-result-section" id="btn-box">
+            <button></button>
+          </section>
+        </div>
+        <div id="descryption-results-wrapper">
+          <span>Meaning</span>
+          <ul></ul>
+          <section id="synoms-box">
+            <p>
+              <strong>Synonyms</strong>
+            </p>
+            <p id="synom-result">
+              <strong></strong>
+            </p>
+          </section>
+        </div>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
