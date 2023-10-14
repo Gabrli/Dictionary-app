@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+nav{
+    position: relative;
+    top: 35px;
+    width: 69%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 40px;
+    z-index: 1;
+    font-family: 'Roboto', sans-serif;
+}
+nav p{
+   margin-right: 25%;
+   font-size: 35px;
+   color: gray;
+}
+nav section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+nav section select { 
+    border: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #303030;
+}
