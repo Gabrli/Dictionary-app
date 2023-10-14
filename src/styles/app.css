@@ -43,12 +43,7 @@ main{
 #search-box input::placeholder{
     color: #aaa;
 }
-#search-box span{
-    font-size: 25px;
-    color: violet;
-    position: relative;
-    top: 4px;
-}
+
 #main-key{
     font-size: 50px;
     font-family: 'Young Serif', serif;
@@ -72,6 +67,8 @@ main{
 }
 
 #btn-box button{
+    transition: .2s ease-in-out;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -195,4 +192,20 @@ main{
 }
 #source-box a{
     color: #000;
+}
+.active-error-text{
+    color: red;
+}
+.active-error{
+    border: 1px solid red;
+}
+.normal-text{
+    font-size: 29px;
+    color: violet;
+    position: relative;
+    top: 4px
+}
+#btn-box button:hover{
+    transition: .2s ease-in-out;
+    background-color: violet;
 }

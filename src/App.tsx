@@ -1,25 +1,28 @@
 import { KeyboardEvent, useState } from "react";
 import Nav from "./components/nav";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch} from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import "./styles/app.css";
 import axios from "axios";
 
 function App() {
-  const [meanings, setMeanings] = useState("");
-  const [verbs, setVerbs] = useState("");
-  const [titleResults, setTitleResults] = useState("");
-  const [readMainKey, setReadMainKey] = useState("");
-  const [sourceLink, setSourceLink] = useState("");
+  const [meanings, setMeanings] = useState("An associative array, a data structure where each value is referenced by a particular key, analogous to words and definitions in a physical dictionary.");
+  const [verbs, setVerbs] = useState("To complite a dictionary");
+  const [titleResults, setTitleResults] = useState("Dictionary");
+  const [readMainKey, setReadMainKey] = useState("/ˈdɪkʃəˌnɛɹi/");
+  const [sourceLink, setSourceLink] = useState("https://en.wiktionary.org/wiki/dictionary");
   const [inputValue, setInputValue] = useState("");
-  const [synoms, setSynoms] = useState("not find");
-  const [audio, setAudio] = useState("");
+  const [synoms, setSynoms] = useState("not found");
+  const [audio, setAudio] = useState("https://api.dictionaryapi.dev/media/pronunciations/en/dictionary-uk.mp3");
+  const [error, setError] = useState(false)
+
 
   const handlerDataApi = (e: KeyboardEvent, inputValue: string) => {
     if (e.code === "Enter") {
       setMeanings("");
       setVerbs("");
+      setError(false)
       axios
         .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`)
         .then((res) => {
@@ -30,6 +33,8 @@ function App() {
           setVerbs(res.data[0].meanings[1].definitions[2].definition);
           setSourceLink(res.data[0].sourceUrls[0]);
           setSynoms(res.data[0].meanings[0].synonyms[0]);
+
+        
 
           if (res.data[0].phonetics[0].audio === "") {
             setAudio(res.data[0].phonetics[1].audio);
@@ -42,20 +47,29 @@ function App() {
           } else {
             setAudio(res.data[0].phonetics[0].audio);
           }
-        });
+        }).catch((err) => {
+          if(err){
+            console.log("error working")
+            setError(!error)
+          } 
+        })
     }
   };
 
   const playAudio = (audio: string) => {
     const play = new Audio(audio);
+    
     play.play();
+    
   };
+
 
   return (
     <>
       <Nav />
+      
       <main>
-        <div id="search-box">
+        <div className={error ? "active-error" : ""} id="search-box">
           <input
             value={inputValue}
             onChange={(e) => {
@@ -67,7 +81,7 @@ function App() {
             placeholder="Enter the keyword"
             onKeyDown={(e) => handlerDataApi(e, inputValue)}
           />
-          <span>{<AiOutlineSearch />}</span>
+          <span className={error ? "active-error-text" : "normal-text"}>{<AiOutlineSearch />}</span>
         </div>
         <div id="main-result-box">
           <section className="main-result-section" id="first">
@@ -79,7 +93,7 @@ function App() {
             </p>
           </section>
           <section className="main-result-section" id="btn-box">
-            <button onClick={() => playAudio(audio)}>{<FaPlay />}</button>
+            <button onClick={() => playAudio(audio)}>{<FaPlay/>}</button>
           </section>
         </div>
         <div id="first-box-hr" className="box-hr">
