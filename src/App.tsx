@@ -87,7 +87,7 @@ function App() {
             id="search"
             name="search"
             type="text"
-            placeholder="Enter the keyword and than click enter"
+            placeholder="Enter the keyword"
             
           />
           <span onClick={() => handlerDataApi(inputValue)} className={error ? "active-error-text" : "normal-text"}>
