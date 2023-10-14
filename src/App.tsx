@@ -1,4 +1,4 @@
-import { KeyboardEvent, useState } from "react";
+import { useState } from "react";
 
 import Nav from "./components/nav";
 import { AiOutlineSearch } from "react-icons/ai";
