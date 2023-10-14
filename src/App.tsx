@@ -26,8 +26,8 @@ function App() {
   const [error, setError] = useState(false);
   const [theme, setTheme] = useState("light");
 
-  const handlerDataApi = (e: KeyboardEvent, inputValue: string) => {
-    if (e.code === "Enter" || e.keyCode === 13) {
+  const handlerDataApi = ( inputValue: string) => {
+    
       setMeanings("");
       setVerbs("");
       setError(false);
@@ -59,7 +59,7 @@ function App() {
             setError(!error);
           }
         });
-    }
+    
   };
 
   const playAudio = (audio: string) => {
@@ -88,9 +88,9 @@ function App() {
             name="search"
             type="text"
             placeholder="Enter the keyword and than click enter"
-            onKeyDown={(e) => handlerDataApi(e, inputValue)}
+            
           />
-          <span className={error ? "active-error-text" : "normal-text"}>
+          <span onClick={() => handlerDataApi(inputValue)} className={error ? "active-error-text" : "normal-text"}>
             {<AiOutlineSearch />}
           </span>
         </div>
