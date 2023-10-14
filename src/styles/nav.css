@@ -1,80 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-:root{
-    --icon-color: #000;
-    --text-font: #000;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+:root {
+  --icon-color: #000;
+  --text-font: #000;
 }
-[data-theme='dark'] {
-    
-    --icon-color: yellow;
-    --text-font: grey;
+[data-theme="dark"] {
+  --icon-color: yellow;
+  --text-font: grey;
 }
-nav{
-    position: relative;
-    top: 35px;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items:center ;
-    margin-left: auto;
-    margin-right: auto;
-    gap: 40px;
-    z-index: 1;
-    font-family: 'Roboto', sans-serif;
+nav {
+  position: relative;
+  top: 35px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 40px;
+  z-index: 1;
+  font-family: "Roboto", sans-serif;
 }
-nav p{
-   margin-right: 25%;
-   font-size: 35px;
-   color: gray;
+nav p {
+  margin-right: 25%;
+  font-size: 35px;
+  color: gray;
 }
-nav section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+nav section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
-nav section p { 
-    width: 140px;
-    border: 0;
-    font-size: 17px;
-    font-weight: 800;
-    color: var(--text-font);
-    background: transparent;
-    outline: none;
-    border-right: 1px solid violet;
-    display: flex;
-    gap: 25px;
-    align-items: center;
-    justify-content: center;
-    
+nav section p {
+  width: 140px;
+  border: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-font);
+  background: transparent;
+  outline: none;
+  border-right: 1px solid violet;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  justify-content: center;
 }
 nav section p a {
-    transition: .2s ease-in-out;
-    color: violet;
-    text-decoration: none;
+  transition: 0.2s ease-in-out;
+  color: violet;
+  text-decoration: none;
 }
-nav section p span{
-    font-size: 20px;
-    position: relative;
-    top: 3px;
-    
+nav section p span {
+  font-size: 20px;
+  position: relative;
+  top: 3px;
 }
-#mode{
-    cursor: pointer;
-    transition: .2s ease-in-out;
-    width: 40px;
-    height: 40px;
-    font-size: 26px;
-    background: transparent;
-    border: 0;
-    color: var(--icon-color);
+#mode {
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  width: 40px;
+  height: 40px;
+  font-size: 26px;
+  background: transparent;
+  border: 0;
+  color: var(--icon-color);
 }
-nav section p a:hover{
-    transition: .2s ease-in-out;
-    color: rgb(240, 186, 240);
-    border-right-color: rgb(240, 186, 240);
+nav section p a:hover {
+  transition: 0.2s ease-in-out;
+  color: rgb(240, 186, 240);
+  border-right-color: rgb(240, 186, 240);
 }
-#mode:hover{
-    transition: .2s ease-in-out;
-    transform: scale(1.1,1.1);
+#mode:hover {
+  transition: 0.2s ease-in-out;
+  transform: scale(1.1, 1.1);
+}
+@media screen and (max-width: 426px) {
+  nav {
+    width: 20%;
+  }
 }
