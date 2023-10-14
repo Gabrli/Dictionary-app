@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+
+:root{
+    --background: #fff;
+    --text-title: #202020;
+    --text-pargraph: gray;
+    --text-des: #202020;
+}
+
+[data-theme='dark'] {
+    --background: #000;
+    --text-title: #fff;
+    --text-des: #fff;
+}
+
+.app{
+    width: 100%;
+    height: 100vh;
+    background-color: var(--background);
+    overflow-y: scroll;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+}
+
 main{
 
     padding: 15% 25px;
@@ -47,7 +73,7 @@ main{
 #main-key{
     font-size: 50px;
     font-family: 'Young Serif', serif;
-    color: #202020;
+    color: var(--text-title);
 }
 #first{
     position: relative;
@@ -95,7 +121,7 @@ main{
     left: 10px;
 }
 .box-hr p{
- color: #202020;
+ color: var(--text-des);
 }
 #descryption-results-wrapper{
     position: relative;
@@ -110,7 +136,7 @@ main{
     top: 7px;
 }
 #descryption-results-wrapper ul li{
-    color: #202020;
+    color: var(--text-des);
     font-size: 15px;
     letter-spacing: 0.5px;
 }
@@ -148,7 +174,7 @@ main{
     top: 7px;
 }
 #verb-result-wrapper ul li{
-    color: #202020;
+    color: var(--text-des);
     font-size: 15px;
     letter-spacing: 0.5px;
 }
@@ -169,7 +195,7 @@ main{
  gap: 10px;
 }
 .simple-end-text{
-    color: gray;
+    color: grey;
 
 }
 .by-text{
@@ -191,7 +217,7 @@ main{
     bottom: 220px;
 }
 #source-box a{
-    color: #000;
+    color: var(--text-des);
 }
 .active-error-text{
     color: red;

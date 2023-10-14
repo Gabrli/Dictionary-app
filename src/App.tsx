@@ -1,9 +1,11 @@
 import { KeyboardEvent, useState } from "react";
+import useLocalStorage from "use-local-storage";
 import Nav from "./components/nav";
 import { AiOutlineSearch} from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import "./styles/app.css";
+import './styles/nav.css'
 import axios from "axios";
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
   const [synoms, setSynoms] = useState("not found");
   const [audio, setAudio] = useState("https://api.dictionaryapi.dev/media/pronunciations/en/dictionary-uk.mp3");
   const [error, setError] = useState(false)
+  const [theme, setTheme] = useState("light")
 
 
   const handlerDataApi = (e: KeyboardEvent, inputValue: string) => {
@@ -63,10 +66,15 @@ function App() {
     
   };
 
+  const switchTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme)
+  }
+
 
   return (
-    <>
-      <Nav />
+    <div data-theme={theme} className="app">
+        <Nav switchTheme={switchTheme}/>
       
       <main>
         <div className={error ? "active-error" : ""} id="search-box">
@@ -131,25 +139,25 @@ function App() {
 
         <div id="source-box">
           <span>Source</span>
-          <a href={sourceLink}>{sourceLink}</a>
+          <a target="_blank" href={sourceLink}>{sourceLink}</a>
           <span>{<BiLinkExternal />}</span>
         </div>
         <div id="production-box">
           <section>
             <p className="simple-end-text">Coded by</p>
             <p className="by-text">
-              <a href="">Gabriel Wiśniewski</a>
+              <a target="_blank" href="https://gabrli.github.io/GabrielDeveloperSite/">Gabriel Wiśniewski</a>
             </p>
           </section>
           <section>
             <p className="simple-end-text">The challenge comes from</p>
             <p className="by-text">
-              <a href="">Frontend Mentor | Challenges</a>
+              <a target="_blank" href="https://www.frontendmentor.io/challenges/dictionary-web-app-h5wwnyuKFL">Frontend Mentor | Challenges</a>
             </p>
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
