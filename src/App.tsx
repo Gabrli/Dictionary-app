@@ -27,7 +27,7 @@ function App() {
   const [theme, setTheme] = useState("light");
 
   const handlerDataApi = (e: KeyboardEvent, inputValue: string) => {
-    if (e.code === "Enter") {
+    if (e.code === "Enter" || e.keyCode === 13) {
       setMeanings("");
       setVerbs("");
       setError(false);
