@@ -264,6 +264,7 @@ main {
     height: 33px;
     position: relative;
     bottom: 13px;
+    z-index: 1;
   }
   #first {
     width: 250px;
