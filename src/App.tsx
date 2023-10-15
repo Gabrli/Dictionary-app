@@ -1,8 +1,12 @@
 import { KeyboardEvent, useState } from "react";
 import Nav from "./components/nav";
-import { AiOutlineSearch } from "react-icons/ai";
+import MainResult from "./components/resultsElements/mainResult";
+import DescryptionResult from "./components/resultsElements/descryptionResult";
+import VerbResult from "./components/resultsElements/verbresult";
+import SearchBox from "./components/searchElements/searchBox";
+
 import { BiLinkExternal } from "react-icons/bi";
-import { BsFillVolumeUpFill } from "react-icons/bs";
+
 import "./styles/app.css";
 import "./styles/nav.css";
 import axios from "axios";
@@ -13,7 +17,7 @@ function App() {
   );
   const [verbs, setVerbs] = useState("To complite a dictionary");
   const [titleResults, setTitleResults] = useState("Dictionary");
-  const [readMainKey, setReadMainKey] = useState("/ˈdɪkʃəˌnɛɹi/");
+  const [phoneticKey, setPhoneticKey] = useState("/ˈdɪkʃəˌnɛɹi/");
   const [sourceLink, setSourceLink] = useState(
     "https://en.wiktionary.org/wiki/dictionary"
   );
@@ -33,15 +37,15 @@ function App() {
     axios
       .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`)
       .then((res) => {
-        data = res.data[0]
+        data = res.data[0];
         setAudio(data.phonetics[0].audio);
         setTitleResults(data.word);
-        setReadMainKey(data.phonetic);
+        setPhoneticKey(data.phonetic);
         setMeanings(data.meanings[0].definitions[3].definition);
         setVerbs(data.meanings[1].definitions[2].definition);
         setSourceLink(data.sourceUrls[0]);
         setSynoms(data.meanings[0].synonyms[0]);
-        console.log(data)
+        console.log(data);
         if (data.phonetics[0].audio === "") {
           setAudio(data.phonetics[1].audio);
           if (data.phonetics[1].audio === "") {
@@ -55,16 +59,12 @@ function App() {
         }
       })
       .catch((err) => {
-        if (err) {
-          setError(true);
-        }
+        err.response.status === 404 ? setError(true) : "";
       });
   };
 
   const handlerEvent = (e: KeyboardEvent) => {
-    if (e.code === "Enter") {
-      getDataFromApi(inputValue);
-    } 
+    e.code === "Enter" ? getDataFromApi(inputValue) : "";
   };
 
   const playAudio = (audio: string) => {
@@ -82,61 +82,26 @@ function App() {
       <Nav switchTheme={() => switchTheme(theme)} />
 
       <main>
-        <div className={error ? "active-error" : ""} id="search-box">
-          <input
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
-            onKeyDown={(e) => handlerEvent(e)}
-            id="search"
-            name="search"
-            type="text"
-            placeholder="Enter the keyword"
-          />
-          <span
-            onClick={() => getDataFromApi(inputValue)}
-            className={error ? "active-error-text" : "normal-text"}
-          >
-            {<AiOutlineSearch />}
-          </span>
-        </div>
-        <div id="main-result-box">
-          <section className="main-result-section" id="first">
-            <p id="main-key">
-              <strong>{titleResults}</strong>
-            </p>
-            <p id="how-read-text">
-              <strong>{readMainKey}</strong>
-            </p>
-          </section>
-          <section className="main-result-section" id="btn-box">
-            <button onClick={() => playAudio(audio)}>
-              {<BsFillVolumeUpFill />}
-            </button>
-          </section>
-        </div>
+        <SearchBox
+          handlerEvent={(e: KeyboardEvent) => handlerEvent(e)}
+          errorClass={error}
+          setInputValue={setInputValue}
+          inputValue={inputValue}
+          getDataFromApi={() => getDataFromApi(inputValue)}
+        />
+        <MainResult
+          titleResult={titleResults}
+          phoneticKey={phoneticKey}
+          playAudio={() => playAudio(audio)}
+          audio={audio}
+        />
         <div id="first-box-hr" className="box-hr">
           <p>
             <strong>noun</strong>
           </p>
           <div id="hr-1" className="hr"></div>
         </div>
-        <div id="descryption-results-wrapper">
-          <span>Meaning</span>
-          <ul>
-            <li>{meanings}</li>
-          </ul>
-          <section id="synoms-box">
-            <p>
-              <strong>Synonyms</strong>
-            </p>
-           
-            <p id="synom-result">
-              <strong>{synoms}</strong>
-            </p>
-          </section>
-        </div>
+        <DescryptionResult meanings={meanings} synoms={synoms} />
         <div id="second-box-hr" className="box-hr">
           <p>
             <strong>verb</strong>
@@ -145,9 +110,7 @@ function App() {
         </div>
         <div id="verb-result-wrapper">
           <span>Meaning</span>
-          <ul>
-            <li>{verbs}</li>
-          </ul>
+          <VerbResult verb={verbs} />
         </div>
 
         <div id="source-box">
