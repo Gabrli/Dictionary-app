@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { KeyboardEvent, useState } from "react";
 import Nav from "./components/nav";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
@@ -19,52 +18,57 @@ function App() {
     "https://en.wiktionary.org/wiki/dictionary"
   );
   const [inputValue, setInputValue] = useState("");
-  const [synoms, setSynoms] = useState("not found");
+  const [synoms, setSynoms] = useState("");
   const [audio, setAudio] = useState(
     "https://api.dictionaryapi.dev/media/pronunciations/en/dictionary-uk.mp3"
   );
   const [error, setError] = useState(false);
   const [theme, setTheme] = useState("light");
 
-  const handlerDataApi = ( inputValue: string) => {
-    
-      setMeanings("");
-      setVerbs("");
-      setError(false);
-      axios
-        .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`)
-        .then((res) => {
-          setAudio(res.data[0].phonetics[0].audio);
-          setTitleResults(res.data[0].word);
-          setReadMainKey(res.data[0].phonetic);
-          setMeanings(res.data[0].meanings[0].definitions[3].definition);
-          setVerbs(res.data[0].meanings[1].definitions[2].definition);
-          setSourceLink(res.data[0].sourceUrls[0]);
-          setSynoms(res.data[0].meanings[0].synonyms[0]);
-
-          if (res.data[0].phonetics[0].audio === "") {
-            setAudio(res.data[0].phonetics[1].audio);
-            if (res.data[0].phonetics[1].audio === "") {
-              setAudio(res.data[0].phonetics[2].audio);
-              if (res.data[0].phonetics[2].audio === "") {
-                console.log("null");
-              }
+  const getDataFromApi = (inputValue: string) => {
+    let data;
+    setMeanings("");
+    setVerbs("");
+    setError(false);
+    axios
+      .get(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`)
+      .then((res) => {
+        data = res.data[0]
+        setAudio(data.phonetics[0].audio);
+        setTitleResults(data.word);
+        setReadMainKey(data.phonetic);
+        setMeanings(data.meanings[0].definitions[3].definition);
+        setVerbs(data.meanings[1].definitions[2].definition);
+        setSourceLink(data.sourceUrls[0]);
+        setSynoms(data.meanings[0].synonyms[0]);
+        console.log(data)
+        if (data.phonetics[0].audio === "") {
+          setAudio(data.phonetics[1].audio);
+          if (data.phonetics[1].audio === "") {
+            setAudio(data.phonetics[2].audio);
+            if (data.phonetics[2].audio === "") {
+              console.log("null");
             }
-          } else {
-            setAudio(res.data[0].phonetics[0].audio);
           }
-        })
-        .catch((err) => {
-          if (err) {
-            setError(!error);
-          }
-        });
-    
+        } else {
+          setAudio(data[0].phonetics[0].audio);
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          setError(true);
+        }
+      });
+  };
+
+  const handlerEvent = (e: KeyboardEvent) => {
+    if (e.code === "Enter") {
+      getDataFromApi(inputValue);
+    } 
   };
 
   const playAudio = (audio: string) => {
     const play = new Audio(audio);
-
     play.play();
   };
 
@@ -84,13 +88,16 @@ function App() {
             onChange={(e) => {
               setInputValue(e.target.value);
             }}
+            onKeyDown={(e) => handlerEvent(e)}
             id="search"
             name="search"
             type="text"
             placeholder="Enter the keyword"
-            
           />
-          <span onClick={() => handlerDataApi(inputValue)} className={error ? "active-error-text" : "normal-text"}>
+          <span
+            onClick={() => getDataFromApi(inputValue)}
+            className={error ? "active-error-text" : "normal-text"}
+          >
             {<AiOutlineSearch />}
           </span>
         </div>
@@ -124,6 +131,7 @@ function App() {
             <p>
               <strong>Synonyms</strong>
             </p>
+           
             <p id="synom-result">
               <strong>{synoms}</strong>
             </p>
